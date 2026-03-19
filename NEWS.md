@@ -21,3 +21,13 @@
     -   **Problem**: `rhino::test_e2e()` failed with `Error in node_run(): System command 'npm' exited with status 1`. The error was opaque because rhino swallows npm's actual output. Running npm directly from `.rhino/` revealed the real cause: the Cypress 13.6.2 binary was missing from `~/Library/Caches/Cypress/13.6.2/` (likely cleared by a cache cleanup or OS update).
     -   **Fix**: Reinstalled the Cypress binary by running `./node_modules/.bin/cypress install` from the `.rhino/` directory.
     -   **Note**: If this recurs, re-run the same command from `.rhino/` to restore the binary without touching `node_modules`.
+6.  GitHub Actions: I initially used [Codex](https://chatgpt.com/s/cd_69bc75957670819193b71967b5d4419e) to try and debug the failed GitHub Actions run, but after asking Posit Assistant, I was able to do this in the IDE.
+    -   **Root cause**: The `packages` array in the workflow was empty, so `libcurl4-openssl-dev` was never installed. This caused `setup-renv` to fail when compiling the `curl` R package, which meant `rhino` was never installed, which caused every subsequent step to fail with "there is no package called 'rhino'". With none of the rhino steps running, `.rhino/` was never initialized, so `cypress-io/github-action@v6` also failed with "missing package manager lockfile."
+
+        **Fixes made:**
+
+        -   **`rhino-test.yml`** — Added `libcurl4-openssl-dev`, `libssl-dev`, and `libxml2-dev` to the `packages` array (needed by `curl`, `openssl`, and `xml2` respectively)
+
+        -   **`rhino-test.yml`** — Updated `actions/setup-node` from `@v3` to `@v4` to address the Node.js 20 deprecation warning (forced cutover is June 2026)
+
+        -   **`renv.lock`** — Synced the `globals` package version mismatch
