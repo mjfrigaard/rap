@@ -14,9 +14,9 @@ describe("Feature 1: Scatter plot data visualization dropdowns
          And the points on the scatter plot should be colored by [genre]", {
               app <- AppDriver$new(name = "feature-01-senario-a", 
                                      height = 800, width = 1173)
-                app$set_inputs(`app-vars-y` = "imdb_num_votes")
-                app$set_inputs(`app=vars-x` = "critics_score")
-                app$set_inputs(`app-vars-z` = "genre")
+                app$set_inputs(`app-vals-y` = "imdb_num_votes")
+                app$set_inputs(`app-vals-x` = "critics_score")
+                app$set_inputs(`app-vals-z` = "genre")
                 app$expect_values()
        })
    })

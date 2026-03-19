@@ -1,7 +1,7 @@
 # import testthat and shiny's testServer()
 box::use(
   testthat[describe, it, expect_equal],
-  shiny[testServer]
+  shiny[reactive, testServer]
 )
 
 # import inputs module
