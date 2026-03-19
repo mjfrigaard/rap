@@ -9,7 +9,7 @@
     -   **Fix**: Accepted via testthat::snapshot_accept("rap-feature-01/").
 3.  `tests/testthat/_snaps/shinytest2/` — Snapshots accepted
     -   **Problem**: Same root cause as above — the `shinytest2` recording snapshot was also stale for the same reasons (missing clicks/message UI, 2× coordmap).
-    -   **Fix**: Accepted via testthat::snapshot_accept("shinytest2/").
+    -   **Fix**: Accepted via `testthat::snapshot_accept("shinytest2/")`.
 4.  `tests/testthat/test-plot.R` — Deprecation warning fixed
     -   **Problem**: `ggplot2::is.ggplot()` was deprecated in ggplot2 3.5.2.
     -   **Fix**: Updated both the `box::use()` import and the call site from `is.ggplot` → `is_ggplot`.
@@ -17,3 +17,7 @@
         -   After `testthat` 2 failures, 1 warning 11/11 pass, 0 warnings
         -   Cypress Couldn't find specs (wrong working dir) 3/3 pass (run from `tests/`)
         -   The Cypress discovery issue wasn't a code fix — the spec files are in `tests/cypress/e2e/` and `cypress.config.js` resolves paths relative to its own location, so `npx cypress run` needs to be run from the `tests/` directory.
+5.  `rhino::test_e2e()` — Cypress binary missing from cache
+    -   **Problem**: `rhino::test_e2e()` failed with `Error in node_run(): System command 'npm' exited with status 1`. The error was opaque because rhino swallows npm's actual output. Running npm directly from `.rhino/` revealed the real cause: the Cypress 13.6.2 binary was missing from `~/Library/Caches/Cypress/13.6.2/` (likely cleared by a cache cleanup or OS update).
+    -   **Fix**: Reinstalled the Cypress binary by running `./node_modules/.bin/cypress install` from the `.rhino/` directory.
+    -   **Note**: If this recurs, re-run the same command from `.rhino/` to restore the binary without touching `node_modules`.
