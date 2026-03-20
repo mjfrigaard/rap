@@ -1,7 +1,8 @@
 library(shinytest2)
 
 test_that("{shinytest2} recording: rap", {
-  app <- AppDriver$new(name = "rap", height = 916, width = 1267)
+  app <- AppDriver$new(name = "rap", height = 916, width = 1267,
+                       variant = shinytest2::platform_variant())
   app$set_inputs(`app-vals-y` = "imdb_num_votes")
   app$set_inputs(`app-vals-x` = "critics_score")
   app$set_inputs(`app-vals-z` = "genre")
