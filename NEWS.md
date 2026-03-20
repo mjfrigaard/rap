@@ -23,7 +23,7 @@
     -   **Problem**: `ggplot2::is.ggplot()` was deprecated in `ggplot2` 3.5.2.
     -   **Fix**: Updated both the `box::use()` import and the call site from `is.ggplot` → `is_ggplot`.
         -   **Net result**
-            -   `testthat` 2 failures, 1 warning 11/11 pass, 0 warnings
+            -   `testthat` had 2 failures and 1 warning, now 11/11 pass, 0 warnings
             -   Cypress: couldn't find specs (wrong working dir) 3/3 pass (run from `tests/`)
         -   The Cypress discovery issue wasn't a code fix — the spec files are in `tests/cypress/e2e/` and `cypress.config.js` resolves paths relative to its own location, so `npx cypress run` needs to be run from the `tests/` directory.
 5.  **GitHub Actions –** Failure
