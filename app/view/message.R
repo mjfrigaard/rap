@@ -1,9 +1,5 @@
-# app/view/message.R
-
 box::use(
-  shiny[actionButton, div, 
-    moduleServer, NS, renderText, 
-    req, textOutput],
+  shiny[NS, actionButton, div, moduleServer, renderText, req, textOutput],
 )
 
 #' @export

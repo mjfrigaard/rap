@@ -1,9 +1,7 @@
-# app/view/display.R
-
 # import data and plot modules
 box::use(
   app / logic / data,
-  app / logic / plot
+  app / logic / plot,
 )
 
 
@@ -11,36 +9,36 @@ box::use(
 #' @export
 ui <- function(id) {
   box::use(
-    shiny[NS, tagList, tags, plotOutput]
+    shiny[NS, plotOutput, tagList, tags],
   )
   ns <- NS(id)
   tagList(
     plotOutput(outputId = ns("scatterplot")),
     tags$hr(),
     tags$blockquote(
-        "The code for this application comes from the ",
-        tags$a("Building web applications with Shiny",
-          href = "https://rstudio-education.github.io/shiny-course/"
-        ),
-        "tutorial"
-      )
+      "The code for this application comes from the ",
+      tags$a(
+        "Building web applications with Shiny",
+        href = "https://rstudio-education.github.io/shiny-course/"
+      ),
+      "tutorial"
     )
+  )
 }
 
 #' display server
 #' @export
 server <- function(id, var_inputs, aes_inputs) {
-  
-  # load 
+
   box::use(
-    ggplot2[labs, theme_minimal, theme],
+    ggplot2[labs, theme, theme_minimal],
     shiny[NS, moduleServer, plotOutput, reactive, renderPlot],
+    stringr[str_replace_all],
     tools[toTitleCase],
-    stringr[str_replace_all]
   )
 
   moduleServer(id, function(input, output, session) {
-    
+
     # use data$movies_data() ----
     movies <- data$movies_data()
 
@@ -69,10 +67,8 @@ server <- function(id, var_inputs, aes_inputs) {
       plot +
         labs(
           title = inputs()$plot_title,
-          x = str_replace_all(
-            toTitleCase(inputs()$x ), "_", " " ),
-          y = str_replace_all(
-            toTitleCase(inputs()$y), "_", " " )
+          x = str_replace_all(toTitleCase(inputs()$x), "_", " "),
+          y = str_replace_all(toTitleCase(inputs()$y), "_", " ")
         ) +
         theme_minimal() +
         theme(legend.position = "bottom")
