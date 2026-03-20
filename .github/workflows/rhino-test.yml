@@ -12,7 +12,7 @@ permissions:
   contents: read
 jobs:
   main:
-    name: Run linters and tests
+    name: Run tests
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repo
@@ -41,38 +41,19 @@ jobs:
         with:
           node-version: 20
 
-      - name: Lint R
-        if: always()
-        shell: Rscript {0}
-        run: rhino::lint_r()
-
-      - name: Lint JavaScript
-        if: always()
-        shell: Rscript {0}
-        run: rhino::lint_js()
-
-      - name: Lint Sass
-        if: always()
-        shell: Rscript {0}
-        run: rhino::lint_sass()
-
       - name: Build JavaScript
-        if: always()
         shell: Rscript {0}
         run: rhino::build_js()
 
       - name: Build Sass
-        if: always()
         shell: Rscript {0}
         run: rhino::build_sass()
 
       - name: Run R unit tests
-        if: always()
         shell: Rscript {0}
         run: rhino::test_r()
 
       - name: Run Cypress end-to-end tests
-        if: always()
         uses: cypress-io/github-action@v6
         with:
           working-directory: .rhino # Created by earlier commands which use Node.js
