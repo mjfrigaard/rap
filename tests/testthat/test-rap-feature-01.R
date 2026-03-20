@@ -12,8 +12,9 @@ describe("Feature 1: Scatter plot data visualization dropdowns
     it("Then the scatter plot should show [critics_score] on the x-axis
          And the scatter plot should show [imdb_num_votes] on the y-axis
          And the points on the scatter plot should be colored by [genre]", {
-              app <- AppDriver$new(name = "feature-01-senario-a", 
-                                     height = 800, width = 1173)
+              app <- AppDriver$new(name = "feature-01-senario-a",
+                                     height = 800, width = 1173,
+                                     variant = shinytest2::platform_variant())
                 app$set_inputs(`app-vars-y` = "imdb_num_votes")
                 app$set_inputs(`app=vars-x` = "critics_score")
                 app$set_inputs(`app-vars-z` = "genre")
@@ -29,8 +30,9 @@ describe("Feature 1: Scatter plot data visualization dropdowns
          it("Then the size of the points on the scatter plot should be [3]
               And the opacity of the points on the scatter plot should be [0.7]
               And the title of the plot should be '[New Plot Title]'", {
-              app <- AppDriver$new(name = "feature-01-senario-b", 
-                                     height = 800, width = 1173)
+              app <- AppDriver$new(name = "feature-01-senario-b",
+                                     height = 800, width = 1173,
+                                     variant = shinytest2::platform_variant())
                 app$set_inputs(`app-aes-alpha` = 0.7)
                 app$set_inputs(`app-aes-size` = 3)
                 app$set_inputs(`app-aes-plot_title` = "New plot title")
