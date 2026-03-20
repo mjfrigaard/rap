@@ -1,14 +1,10 @@
-# app/view/var_inputs.R
-
 # define module functions
 
 #' variable input values ui
 #' @export
 ui <- function(id) {
   box::use(
-    shiny[
-      NS, tagList, selectInput
-    ],
+    shiny[NS, selectInput, tagList],
   )
   ns <- NS(id)
   tagList(
@@ -59,14 +55,12 @@ server <- function(id) {
   )
 
   moduleServer(id, function(input, output, session) {
-    return(
-      reactive({
-        list(
-          "x" = input$x,
-          "y" = input$y,
-          "z" = input$z
-        )
-      })
-    )
+    reactive({
+      list(
+        "x" = input$x,
+        "y" = input$y,
+        "z" = input$z
+      )
+    })
   })
 }

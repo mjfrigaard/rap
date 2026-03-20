@@ -1,14 +1,10 @@
-# app/view/aes_inputs.R
-
 # define module functions
 
 #' aesthetic input values ui
 #' @export
 ui <- function(id) {
   box::use(
-    shiny[
-      NS, tagList, sliderInput, textInput
-    ],
+    shiny[NS, sliderInput, tagList, textInput],
   )
   ns <- NS(id)
   tagList(
@@ -40,14 +36,12 @@ server <- function(id) {
   )
 
   moduleServer(id, function(input, output, session) {
-    return(
-      reactive({
-        list(
-          "alpha" = input$alpha,
-          "size" = input$size,
-          "plot_title" = input$plot_title
-        )
-      })
-    )
+    reactive({
+      list(
+        "alpha" = input$alpha,
+        "size" = input$size,
+        "plot_title" = input$plot_title
+      )
+    })
   })
 }
