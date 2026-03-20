@@ -38,3 +38,19 @@
         3.  **`renv.lock`** — Synced the `globals` package version mismatch
 6.  **Linting** - GitHub Action fail:
     -   Removed linting steps from workflow.
+
+    -   **Root cause:** `expect_values()` includes all Shiny output values in the JSON snapshot — including the plot output, which embeds a `[image data hash: ...]`. That hash is computed from the rendered pixels, and macOS (Quartz) and Linux (Cairo) produce different pixels → different hash → CI always fails on comparison. `platform_variant()` only helped by separating the storage directories, but since no Linux baseline snapshots were ever committed, CI would create new ones and fail with "Adding new cases" on every run.
+
+        **Fix:**
+
+        -   Removed `platform_variant()` (no longer needed)
+
+        -   Added `output = c("app-clicks-counter", "app-message-message_text")` to `expect_values()` — these are text outputs, identical across platforms
+
+        -   Added `screenshot_args = FALSE` to skip the alongside screenshot
+
+        -   Deleted the `mac-4.5/` dirs and re-recorded clean, platform-agnostic JSON snapshots
+
+        The plot logic itself is already unit-tested in `test-plot.R`, so nothing meaningful is lost from the `shinytest2` tests.
+
+    -   [**Success**](https://github.com/mjfrigaard/rap/actions/runs/23364283605/job/67974681902)**!**
