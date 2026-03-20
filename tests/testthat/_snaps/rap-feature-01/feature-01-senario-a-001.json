@@ -1,0 +1,13 @@
+{
+  "output": {
+    "app-clicks-counter": "0",
+    "app-message-message_text": {
+      "message": "",
+      "call": "NULL",
+      "type": [
+        "shiny.silent.error",
+        "validation"
+      ]
+    }
+  }
+}
