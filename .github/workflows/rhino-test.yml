@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup system dependencies
         run: |
@@ -37,7 +37,7 @@ jobs:
         uses: r-lib/actions/setup-renv@v2
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 20
 
@@ -54,10 +54,10 @@ jobs:
         run: rhino::test_r()
 
       - name: Run Cypress end-to-end tests
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           working-directory: .rhino # Created by earlier commands which use Node.js
           start: npm run run-app
           project: ../tests
-          wait-on: 'http://localhost:3333/'
+          wait-on: 'http://127.0.0.1:3333/'
           wait-on-timeout: 60
